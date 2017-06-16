@@ -6,5 +6,3 @@ services:
       context: .
     volumes:
       - .:/app
-    ports:
-      - "3000"

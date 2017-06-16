@@ -4,4 +4,4 @@ RUN ["mkdir", "/app"]
 VOLUME ["/app"]
 
 ENTRYPOINT ["node", "/app/index.js"]
-EXPOSE 3000
+EXPOSE 80
