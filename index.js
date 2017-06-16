@@ -1,8 +1,6 @@
-const http = require('http')
+const express = require('express')
+const app = express()
 
-const server = http.createServer((req, res) => {
-  console.log(req.url)
-  res.end('Hello from Node.js!')
-})
+app.use(express.static(__dirname + '/dashboards/', { extensions: ['html'] }))
 
-server.listen(3000)
+app.listen(80)
