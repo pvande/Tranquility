@@ -17,6 +17,7 @@ app.all('/:key', (req, res, next) => {
   res.end()
 })
 
+app.all('*', (_, res) => res.sendStatus(404))
 app.listen(80)
 
 
