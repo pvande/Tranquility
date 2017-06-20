@@ -1,9 +1,11 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const io = require('socket.io')
 
-const app = express()
 const store = require('./redux/store')
-
+const app = express()
+const server = app.listen(80)
+const socket = io(server)
 
 app.use(express.static(__dirname + '/dashboards/', { extensions: ['html'] }))
 app.use(bodyParser.json())
@@ -18,9 +20,8 @@ app.all('/:key', (req, res, next) => {
 })
 
 app.all('*', (_, res) => res.sendStatus(404))
-app.listen(80)
 
 
 store.subscribe(() => {
-  console.warn(store.getState())
+  socket.emit('data', store.getState())
 })
