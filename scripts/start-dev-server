@@ -5,5 +5,8 @@ cd /app
 echo "Ensuring NPM dependencies..."
 npm install
 
+echo "Starting Webpack..."
+node_modules/.bin/webpack --watch &
+
 echo "Starting server process..."
 node_modules/.bin/nodemon index.js

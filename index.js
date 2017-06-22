@@ -7,7 +7,7 @@ const app = express()
 const server = app.listen(80)
 const socket = io(server)
 
-app.use(express.static(__dirname + '/dashboards/', { extensions: ['html'] }))
+app.use(express.static(__dirname + '/static/', { extensions: ['html'] }))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
