@@ -6,16 +6,19 @@
 
 .FlowChild {
   position: relative;
-  flex: 1;
   margin: 20px;
+  flex: 1;
 }
 
-.FlowChild > * {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+.FlowChild > .Flow {
+  height: calc(100% + 20px + 20px);
+  width: calc(100% + 20px + 20px);
+  margin: -20px;
+}
+
+.FlowChild > :not(.Flow) {
+  height: 100%;
+  width: 100%;
 }
 
 .Flow[direction="column"] { flex-direction: column; }
@@ -24,5 +27,5 @@
 .Flow[direction="column"] > .FlowChild + .FlowChild { margin-top: 0; }
 .Flow[direction="row"] > .FlowChild + .FlowChild { margin-left: 0; }
 
-.Flow[direction="column"] > .FlowChild > .Flow { margin: -20px; }
-.Flow[direction="row"] > .FlowChild > .Flow { margin: -20px; }
+.Flow[direction="column"] > .FlowChild > .Flow { margin-top: -20px; }
+.Flow[direction="row"] > .FlowChild > .Flow { margin-left: -20px; margin-right: -20px; }
