@@ -22,6 +22,10 @@ app.all('/:key', (req, res, next) => {
 app.all('*', (_, res) => res.sendStatus(404))
 
 
+socket.on('connect', (s) => {
+  s.emit('data', store.getState())
+})
+
 store.subscribe(() => {
   socket.emit('data', store.getState())
 })

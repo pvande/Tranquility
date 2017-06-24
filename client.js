@@ -1,6 +1,6 @@
-var socket = io();
-socket.on('data', function(data) {
-  console.warn(data);
-});
+import ReactDOM from 'react-dom'
 
-console.info(window.Dashboard)
+const target = document.getElementById('dashboard')
+io().on('data', function(data) {
+  ReactDOM.render(<Dashboard {...data} />, target)
+});

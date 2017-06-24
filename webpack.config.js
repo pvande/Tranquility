@@ -1,5 +1,6 @@
 const path = require('path')
 
+const webpack = require('webpack')
 const glob = require('webpack-glob-entries')
 const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 const MultipageWebpackPlugin = require('multipage-webpack-plugin')
@@ -16,15 +17,39 @@ const transformValues = (obj, fn) => {
 }
 
 module.exports = (env) => {
+  const dashboards = glob('./dashboards/*.js')
 
   const config = {
     context: __dirname,
-    entry: transformValues(glob('./dashboards/*.js'), (file) => [file, './client.js']),
+    entry: Object.assign(
+      transformValues(dashboards, (file) => [file, path.join(__dirname, 'client.js')]),
+      { vendor: [ 'react', 'react-dom' ] },
+    ),
     output: {
       filename: '[name].js',
       path: path.join(__dirname, 'static'),
     },
+    module: {
+      rules: [
+        {
+          test: /\.jsx?/,
+          exclude: /node_modules/,
+          use: 'babel-loader'
+        }
+      ]
+    },
+    resolveLoader: {
+      modules: [
+        path.join(__dirname, 'node_modules'),
+      ],
+    },
     plugins: [
+      new webpack.LoaderOptionsPlugin({
+        debug: true
+      }),
+      new webpack.ProvidePlugin({
+        React: 'react',
+      }),
       new ChunkManifestPlugin({
         filename: 'manifest.json',
         inlineManifest: false,
@@ -35,6 +60,7 @@ module.exports = (env) => {
         templatePath: '.',
       }),
     ],
+    devtool: "module-source-map",
   }
 
   if (env == 'production') {

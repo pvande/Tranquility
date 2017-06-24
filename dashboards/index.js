@@ -1,5 +1,3 @@
-// window.Dashboard = (props) => {
-//   return (<div>Hello</div>)
-// }
-
-window.Dashboard = "Hello"
+Dashboard = (props) => {
+  return (<div>Hello</div>)
+}
