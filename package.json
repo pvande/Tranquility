@@ -1,7 +1,13 @@
 {
+  "scripts": {
+    "pretest": "npm install",
+    "test": "nodemon --ext .css --ignore static index.js &",
+    "posttest": "webpack --watch"
+  },
   "dependencies": {
     "body-parser": "^1.17.2",
     "chunk-manifest-webpack-plugin": "^1.1.0",
+    "classnames": "^2.2.5",
     "express": "^4.15.3",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
@@ -13,9 +19,11 @@
     "babel-loader": "^7.1.0",
     "babel-preset-modern-browsers": "^9.0.2",
     "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.4",
     "glob": "^7.1.2",
     "multipage-webpack-plugin": "pvande/multipage-webpack-plugin",
     "nodemon": "^1.11.0",
+    "style-loader": "^0.18.2",
     "webpack": "^3.0.0",
     "webpack-glob-entries": "^1.0.1"
   }

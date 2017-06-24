@@ -32,21 +32,24 @@ module.exports = (env) => {
     module: {
       rules: [
         {
-          test: /\.jsx?/,
+          test: /\.jsx?$/,
           exclude: /node_modules/,
-          use: 'babel-loader'
-        }
-      ]
+          use: 'babel-loader',
+        },
+        {
+          test: /\.css$/,
+          use: [ 'style-loader', 'css-loader' ],
+        },
+      ],
     },
-    resolveLoader: {
+    resolve: {
+      extensions: ['.js', '.jsx'],
       modules: [
+        path.join(__dirname, 'components'),
         path.join(__dirname, 'node_modules'),
       ],
     },
     plugins: [
-      new webpack.LoaderOptionsPlugin({
-        debug: true
-      }),
       new webpack.ProvidePlugin({
         React: 'react',
       }),

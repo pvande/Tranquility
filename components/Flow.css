@@ -1,0 +1,28 @@
+.Flow {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.FlowChild {
+  position: relative;
+  flex: 1;
+  margin: 20px;
+}
+
+.FlowChild > * {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.Flow[direction="column"] { flex-direction: column; }
+.Flow[direction="row"] { flex-direction: row; }
+
+.Flow[direction="column"] > .FlowChild + .FlowChild { margin-top: 0; }
+.Flow[direction="row"] > .FlowChild + .FlowChild { margin-left: 0; }
+
+.Flow[direction="column"] > .FlowChild > .Flow { margin: -20px; }
+.Flow[direction="row"] > .FlowChild > .Flow { margin: -20px; }
