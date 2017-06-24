@@ -2,21 +2,26 @@
   display: flex;
   justify-content: center;
   align-items: stretch;
+  height: 100%;
+  width: 100%;
 }
 
 .FlowChild {
   position: relative;
-  margin: 20px;
   flex: 1;
 }
 
-.FlowChild > .Flow {
-  height: calc(100% + 20px + 20px);
-  width: calc(100% + 20px + 20px);
-  margin: -20px;
+.FlowChild {
+  margin: var(--panel-spacing);
 }
 
-.FlowChild > :not(.Flow) {
+.FlowNested .Flow {
+  height: calc(100% + var(--panel-spacing) + var(--panel-spacing));
+  width: calc(100% + var(--panel-spacing) + var(--panel-spacing));
+  margin: calc(-1.0 * var(--panel-spacing));
+}
+
+.FlowPanel > * {
   height: 100%;
   width: 100%;
 }
@@ -26,6 +31,3 @@
 
 .Flow[direction="column"] > .FlowChild + .FlowChild { margin-top: 0; }
 .Flow[direction="row"] > .FlowChild + .FlowChild { margin-left: 0; }
-
-.Flow[direction="column"] > .FlowChild > .Flow { margin-top: -20px; }
-.Flow[direction="row"] > .FlowChild > .Flow { margin-left: -20px; margin-right: -20px; }

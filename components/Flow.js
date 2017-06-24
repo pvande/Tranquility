@@ -9,8 +9,11 @@ const Flow = ({ direction, children }) => {
           const childProps = Object.assign({}, props)
           delete childProps.flex
 
+          const isFlow = (type === Flow || type === Row || type === Column)
+          const classNames = classnames("FlowChild", isFlow ? "FlowNested" : "FlowPanel")
+
           return (
-            <div className="FlowChild" style={{ flex: props.flex }}>
+            <div className={classNames} style={{ flex: props.flex }}>
               { React.createElement(type, childProps) }
             </div>
           )
