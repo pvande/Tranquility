@@ -22,7 +22,11 @@ module.exports = (env) => {
   const config = {
     context: __dirname,
     entry: Object.assign(
-      transformValues(dashboards, (file) => [file, path.join(__dirname, 'client.js')]),
+      transformValues(dashboards, (file) => [
+        file,
+        `!!style-loader!css-loader!${path.join(__dirname, 'baseline.css')}`,
+        path.join(__dirname, 'client.js')
+      ]),
       { vendor: [ 'react', 'react-dom' ] },
     ),
     output: {
@@ -38,7 +42,16 @@ module.exports = (env) => {
         },
         {
           test: /\.css$/,
-          use: [ 'style-loader', 'css-loader' ],
+          use: [
+            { loader: 'style-loader' },
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                localIdentName: '[name]__[local]--[hash:base64:5]',
+              },
+            },
+          ],
         },
       ],
     },
