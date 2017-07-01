@@ -21,7 +21,7 @@
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.4",
     "glob": "^7.1.2",
-    "multipage-webpack-plugin": "pvande/multipage-webpack-plugin",
+    "multipage-webpack-plugin": "^0.3.0",
     "nodemon": "^1.11.0",
     "style-loader": "^0.18.2",
     "webpack": "^3.0.0",
