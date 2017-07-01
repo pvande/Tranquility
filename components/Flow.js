@@ -1,22 +1,38 @@
 import classnames from 'classnames'
-require('./Flow.css')
+import styles from './Flow.css'
+
+const without = (obj, ...keys) => {
+  const newObj = Object.assign({}, obj)
+  keys.forEach(key => delete newObj[key])
+  return newObj
+}
+
+const NullChild = <div className={styles.Child} />
+
+const NestedFlow = ({ type, props }) =>
+  <div className={classnames(styles.Child, styles.Nested)} style={{ flex: props.flex }}>
+    { React.createElement(type, without(props, 'flex')) }
+  </div>
+
+const ChildPanel = ({ type, props }) =>
+  <section className={classnames(styles.Child, styles.Panel)} style={{ flex: props.flex }}>
+    { React.createElement(type, without(props, 'flex')) }
+  </section>
 
 const Flow = ({ direction, children }) => {
   return (
-    <div className="Flow" direction={direction}>
+    <div className={styles.Flow} direction={direction}>
       {
-        React.Children.map(children, ({ type, props }) => {
-          const childProps = Object.assign({}, props)
-          delete childProps.flex
+        React.Children.map(children, child => {
+          if (!child) {
+            return NullChild
+          }
 
-          const isFlow = (type === Flow || type === Row || type === Column)
-          const classNames = classnames("FlowChild", isFlow ? "FlowNested" : "FlowPanel")
-
-          return (
-            <div className={classNames} style={{ flex: props.flex }}>
-              { React.createElement(type, childProps) }
-            </div>
-          )
+          if (child.type === Flow || child.type === Row || child.type === Column) {
+            return NestedFlow(child)
+          } else {
+            return ChildPanel(child)
+          }
         })
       }
     </div>
