@@ -16,12 +16,13 @@ const transformValues = (obj, fn) => {
   return newObj
 }
 
+const ROOT_DIR = path.join(__dirname, '..')
 const BASE_CSS = path.join(__dirname, 'baseline.css')
 const CLIENT_JS = path.join(__dirname, 'client.js')
 const addCommonDependencies = (f) => [ f, `!!style-loader!css-loader!${BASE_CSS}`, CLIENT_JS ]
 
 module.exports = (env) => {
-  const dashboards = glob('./dashboards/*.js')
+  const dashboards = glob(path.join(ROOT_DIR, 'dashboards', '*.js'))
 
   const config = {
     context: __dirname,
@@ -31,7 +32,7 @@ module.exports = (env) => {
     ),
     output: {
       filename: '[name].js',
-      path: path.join(__dirname, 'static'),
+      path: path.join(ROOT_DIR, 'static'),
     },
     module: {
       rules: [
@@ -58,8 +59,8 @@ module.exports = (env) => {
     resolve: {
       extensions: ['.js', '.jsx'],
       modules: [
-        path.join(__dirname, 'components'),
-        path.join(__dirname, 'node_modules'),
+        path.join(ROOT_DIR, 'components'),
+        path.join(ROOT_DIR, 'node_modules'),
       ],
     },
     plugins: [
