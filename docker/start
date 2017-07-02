@@ -1,0 +1,4 @@
+#/bin/bash
+
+/app/node_modules/.bin/webpack && \
+node server/index.js

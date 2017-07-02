@@ -16,18 +16,18 @@ const transformValues = (obj, fn) => {
   return newObj
 }
 
+const BASE_CSS = path.join(__dirname, 'baseline.css')
+const CLIENT_JS = path.join(__dirname, 'client.js')
+const addCommonDependencies = (f) => [ f, `!!style-loader!css-loader!${BASE_CSS}`, CLIENT_JS ]
+
 module.exports = (env) => {
   const dashboards = glob('./dashboards/*.js')
 
   const config = {
     context: __dirname,
     entry: Object.assign(
-      transformValues(dashboards, (file) => [
-        file,
-        `!!style-loader!css-loader!${path.join(__dirname, 'baseline.css')}`,
-        path.join(__dirname, 'client.js')
-      ]),
-      { vendor: [ 'react', 'react-dom' ] },
+      transformValues(dashboards, addCommonDependencies),
+      { vendor: [ 'react', 'react-dom' ] }
     ),
     output: {
       filename: '[name].js',

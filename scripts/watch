@@ -1,4 +1,11 @@
 #!/bin/bash
 
-docker-compose down
-docker-compose run -p 3000:80 -w "/app" -e "NODE_ENV=development" -e "DEBUG=$DEBUG" --entrypoint "npm test" webserver
+# Build Tranquility.
+docker build -t tranquility-dev -f Dockerfile.dev .
+
+# Start the webserver and Webpack.
+docker run -p 3000:80 \
+           -v "$(pwd):/app" \
+           -e "DEBUG=$DEBUG" \
+           --rm -it \
+           tranquility-dev

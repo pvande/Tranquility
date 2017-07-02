@@ -1,0 +1,4 @@
+#/bin/bash
+
+cd server && nodemon index.js &
+/app/node_modules/.bin/webpack --watch
