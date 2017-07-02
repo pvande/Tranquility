@@ -1,6 +1,0 @@
-{
-  "presets": [
-    [ "modern-browsers", { "modules": false } ],
-    [ "react" ],
-  ]
-}

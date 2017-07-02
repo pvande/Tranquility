@@ -39,5 +39,11 @@
   },
   "devDependencies": {
     "nodemon": "^1.11.0"
+  },
+  "babel": {
+    "presets": [
+      [ "modern-browsers", { "modules": false } ],
+      [ "react" ]
+    ]
   }
 }
