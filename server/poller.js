@@ -1,5 +1,5 @@
 const Poll = require('polliwog')
-const polls = require('../config/poll')
+const polls = require('/user/poll')
 
 module.exports = store => {
   Object.keys(polls).forEach(name => {

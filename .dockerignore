@@ -1,4 +1,2 @@
 .git
 *.md
-static/*
-!static/theme.css

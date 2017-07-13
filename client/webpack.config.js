@@ -2,10 +2,10 @@ const path = require('path')
 
 const webpack = require('webpack')
 const glob = require('webpack-glob-entries')
-const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
-const MultipageWebpackPlugin = require('multipage-webpack-plugin')
+const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-const transformValues = (obj, fn) => {
+const mapValues = (obj, fn) => {
   const newObj = {}
   const keys = Object.getOwnPropertyNames(obj)
 
@@ -16,30 +16,51 @@ const transformValues = (obj, fn) => {
   return newObj
 }
 
-const ROOT_DIR = path.join(__dirname, '..')
-const BASE_CSS = path.join(__dirname, 'baseline.css')
-const CLIENT_JS = path.join(__dirname, 'client.js')
-const addCommonDependencies = (f) => [ f, `!!style-loader!css-loader!${BASE_CSS}`, CLIENT_JS ]
+module.exports = env => {
+  const dashboards = glob('/user/dashboards/*.js')
+  const dashboardNames = Object.keys(dashboards)
 
-module.exports = (env) => {
-  const dashboards = glob(path.join(ROOT_DIR, 'dashboards', '*.js'))
+  const htmlGeneratingPlugins = dashboardNames.map(
+    name =>
+      new HtmlWebpackPlugin({
+        filename: `${name}.html`,
+        chunksSortMode: 'dependency',
+        chunks: ['client', 'vendor', 'shared', name],
+        template: 'template.html',
+      }),
+  )
 
   const config = {
     context: __dirname,
-    entry: Object.assign(
-      transformValues(dashboards, addCommonDependencies),
-      { vendor: [ 'react', 'react-dom' ] }
-    ),
+    entry: Object.assign({}, dashboards, {
+      vendor: ['react', 'react-dom'],
+      client: [
+        '!!style-loader!css-loader!/app/client/baseline.css',
+        '/app/client/client.js',
+      ],
+    }),
     output: {
       filename: '[name].js',
-      path: path.join(ROOT_DIR, 'static'),
+      path: '/app/static',
     },
     module: {
       rules: [
         {
           test: /\.jsx?$/,
           exclude: /node_modules/,
-          use: 'babel-loader',
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                [
+                  require('babel-preset-modern-browsers').buildPreset,
+                  { modules: false },
+                ],
+                [require('babel-preset-react')],
+              ],
+              plugins: [require('babel-plugin-transform-runtime')],
+            },
+          },
         },
         {
           test: /\.css$/,
@@ -59,25 +80,31 @@ module.exports = (env) => {
     resolve: {
       extensions: ['.js', '.jsx'],
       modules: [
-        path.join(ROOT_DIR, 'components'),
-        path.join(ROOT_DIR, 'node_modules'),
+        '/user/components',
+        '/app/client/built-ins',
+        '/app/node_modules',
       ],
     },
     plugins: [
-      new webpack.ProvidePlugin({
-        React: 'react',
-      }),
+      new webpack.ProvidePlugin({ React: 'react' }),
       new ChunkManifestPlugin({
         filename: 'manifest.json',
         inlineManifest: false,
       }),
-      new MultipageWebpackPlugin({
-        htmlTemplatePath: 'template.html',
-        templateFilename: '[name].html',
-        templatePath: '.',
+
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        minChunks: Infinity,
       }),
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'shared',
+        minChunks: dashboardNames.length,
+        chunks: dashboardNames,
+      }),
+
+      ...htmlGeneratingPlugins,
     ],
-    devtool: "module-source-map",
+    devtool: 'module-source-map',
   }
 
   if (env == 'production') {

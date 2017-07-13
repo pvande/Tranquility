@@ -1,4 +1,4 @@
 const { createStore } = require('redux')
-const reducer = require('../config/reducer')
+const reducer = require('/user/reducer')
 
 module.exports = createStore(reducer)

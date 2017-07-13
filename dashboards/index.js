@@ -1,6 +1,4 @@
-import Flow from 'Flow'
-import {Row, Column} from 'Flow'
-
+import { Row, Column } from 'Flow'
 
 const Welcome = () =>
   <div style={{ vertialAlign: 'middle' }}>
@@ -10,17 +8,21 @@ const Welcome = () =>
 
 const Panel = ({ title, children }) =>
   <section>
-    <h1>{title}</h1>
-    <p>{children}</p>
+    <h1>
+      {title}
+    </h1>
+    <p>
+      {children}
+    </p>
   </section>
 
-const Dashboard = (props) =>
+const Dashboard = props =>
   <Column>
     <Welcome />
     <Row>
-      <Panel title="Getting Started"></Panel>
-      <Panel title="Examples"></Panel>
-      <Panel title="Documentation"></Panel>
+      <Panel title="Getting Started" />
+      <Panel title="Examples" />
+      <Panel title="Documentation" />
     </Row>
   </Column>
 
