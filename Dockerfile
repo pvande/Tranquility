@@ -7,6 +7,6 @@ COPY ["package.json", "package-lock.json", "/app/"]
 RUN npm install
 
 # Copy application code
-COPY ["components", "dashboards", "docker", "static", "server", "client", "/app/"]
+COPY ["components", "config", "dashboards", "docker", "static", "server", "client", "/app/"]
 ENV NODE_ENV=production
 ENTRYPOINT /app/docker/start
