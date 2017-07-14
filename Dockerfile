@@ -12,6 +12,7 @@ RUN ln -sn /app/client/customizable/theme.css /user/theme.css && \
 RUN npm install --no-shrinkwrap \
                 body-parser@1.17.2 \
                 express@4.15.3 \
+                express-static-gzip@0.3.0 \
                 polliwog@0.2.0 \
                 redux@3.7.1 \
                 socket.io@2.0.3
@@ -25,6 +26,7 @@ RUN npm install --no-shrinkwrap \
                 babel-preset-react@6.24.1 \
                 babel-runtime@6.23.0 \
                 chunk-manifest-webpack-plugin@1.1.0 \
+                compression-webpack-plugin@0.4.0 \
                 css-loader@0.28.4 \
                 html-webpack-plugin@2.29.0 \
                 react@15.6.1 \

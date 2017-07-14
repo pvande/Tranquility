@@ -1,4 +1,5 @@
 const express = require('express')
+const gzipped = require('express-static-gzip')
 const bodyParser = require('body-parser')
 
 module.exports = store => {
@@ -10,7 +11,7 @@ module.exports = store => {
   app.use(bodyParser.urlencoded({ extended: true }))
 
   // Serve requests for content from /static directly.
-  app.use(express.static('/app/static/', { extensions: ['html'] }))
+  app.use(gzipped('/app/static/', { extensions: ['html'] }))
 
   // Incoming data endpoint; dispatches the incoming path and (parsed) HTTP body
   // to the Redux store.  The action type corresponds to the HTTP verb.

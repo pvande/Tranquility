@@ -1,4 +1,4 @@
 #/bin/bash
 
-cd server && nodemon index.js &
-/app/node_modules/.bin/webpack --watch --config /app/client/webpack.config.js
+/app/node_modules/.bin/webpack --watch --config /app/client/webpack.config.js &
+nodemon --delay 0.2 server/index.js

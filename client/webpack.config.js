@@ -3,6 +3,7 @@ const path = require('path')
 const webpack = require('webpack')
 const glob = require('webpack-glob-entries')
 const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin')
+const CompressionPlugin = require('compression-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const mapValues = (obj, fn) => {
@@ -103,6 +104,13 @@ module.exports = env => {
       }),
 
       ...htmlGeneratingPlugins,
+
+      new CompressionPlugin({
+        asset: '[path].gz[query]',
+        test: /\.js(\.map)?$/,
+        threshold: 5120,
+        deleteOriginalAssets: true,
+      }),
     ],
     devtool: 'module-source-map',
   }
