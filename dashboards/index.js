@@ -16,7 +16,7 @@ const Panel = ({ title, children }) =>
     </p>
   </section>
 
-const Dashboard = props =>
+export default props =>
   <Column>
     <Welcome />
     <Row>
@@ -25,5 +25,3 @@ const Dashboard = props =>
       <Panel title="Documentation" />
     </Row>
   </Column>
-
-window.Dashboard = Dashboard

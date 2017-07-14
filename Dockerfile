@@ -28,6 +28,7 @@ RUN npm install --no-shrinkwrap \
                 chunk-manifest-webpack-plugin@1.1.0 \
                 compression-webpack-plugin@0.4.0 \
                 css-loader@0.28.4 \
+                expose-loader@0.7.3 \
                 html-webpack-plugin@2.29.0 \
                 react@15.6.1 \
                 react-dom@15.6.1 \

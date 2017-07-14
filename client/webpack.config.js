@@ -33,13 +33,17 @@ module.exports = env => {
 
   const config = {
     context: __dirname,
-    entry: Object.assign({}, dashboards, {
-      vendor: ['react', 'react-dom'],
-      client: [
+    entry: Object.assign(
+      {},
+      mapValues(dashboards, x => [
+        `expose-loader?Dashboard!${x}`,
         '!!style-loader!css-loader!/app/client/baseline.css',
         '/app/client/client.js',
-      ],
-    }),
+      ]),
+      {
+        vendor: ['react', 'react-dom'],
+      },
+    ),
     output: {
       filename: '[name].js',
       path: '/app/static',
@@ -59,7 +63,7 @@ module.exports = env => {
                 ],
                 [require('babel-preset-react')],
               ],
-              plugins: [require('babel-plugin-transform-runtime')],
+              plugins: [require('babel-plugin-transform-runtime').default],
             },
           },
         },
