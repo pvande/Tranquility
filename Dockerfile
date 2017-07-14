@@ -2,6 +2,12 @@ FROM mhart/alpine-node:8.1.3
 WORKDIR /app
 EXPOSE 80
 
+RUN mkdir -p /app /app/static /user
+RUN ln -sn /app/client/customizable/theme.css /user/theme.css && \
+    ln -sn /user/theme.css /app/static/theme.css && \
+    ln -sn /app/server/customizable/poller.js /user/poller.js && \
+    ln -sn /app/server/customizable/reducer.js /user/reducer.js
+
 # Install server dependencies
 RUN npm install --no-shrinkwrap \
                 body-parser@1.17.2 \
@@ -28,12 +34,10 @@ RUN npm install --no-shrinkwrap \
                 webpack-glob-entries@1.0.1
 
 # Copy application code
-COPY config /user
 COPY dashboards /user/dashboards
 COPY docker /app/docker
 COPY client /app/client
 COPY server /app/server
-COPY static /app/static
 
 ENV NODE_ENV=production
 ENTRYPOINT /app/docker/start

@@ -5,12 +5,10 @@ docker build -t tranquility-dev -f Dockerfile.dev .
 
 # Start the webserver and Webpack.
 docker run -p 3000:80 \
-           -v `pwd`/config:/user \
            -v `pwd`/dashboards:/user/dashboards \
            -v `pwd`/docker:/app/docker \
            -v `pwd`/client:/app/client \
            -v `pwd`/server:/app/server \
-           -v `pwd`/static:/app/static \
            -e "DEBUG=$DEBUG" \
            --rm -it \
            --name tranquility-dev \

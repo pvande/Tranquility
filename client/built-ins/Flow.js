@@ -28,11 +28,8 @@ const Flow = ({ direction, children }) => {
           return NullChild
         }
 
-        if (
-          child.type === Flow ||
-          child.type === Row ||
-          child.type === Column
-        ) {
+        const type = child.type
+        if (type === Flow || type === Row || type === Column) {
           return NestedFlow(child)
         } else {
           return ChildPanel(child)
